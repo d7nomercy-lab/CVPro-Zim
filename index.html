@@ -3,252 +3,377 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CVPro-Zim | Free Zimbabwe CV & Resume Builder</title>
+  <title>CVPro-Zim | Professional CV & Resume Studio</title>
   <style>
-    /* ================= THEME VARIABLES ================= */
+    /* ================= CV SHEET THEMES ================= */
     :root {
-      --primary: #1a365d;
-      --accent: #2b6cb0;
-      --bg-sidebar: #f7fafc;
-      --text-main: #1a202c;
-      --text-muted: #4a5568;
-      --header-bg: #1a365d;
+      --primary: #0f294a;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --bg-sidebar: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --header-bg: linear-gradient(135deg, #0f294a 0%, #1e3a8a 100%);
       --header-text: #ffffff;
-      --border-color: #cbd5e0;
-      --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --border-color: #e2e8f0;
+      --font-cv: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Theme 2: Zim Emerald */
     [data-theme="emerald"] {
-      --primary: #065f46;
+      --primary: #064e3b;
       --accent: #d97706;
-      --bg-sidebar: #ecfdf5;
+      --accent-soft: rgba(217, 119, 6, 0.1);
+      --bg-sidebar: #f0fdf4;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --header-bg: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+      --header-text: #ffffff;
+      --border-color: #bbf7d0;
+    }
+
+    [data-theme="executive"] {
+      --primary: #18181b;
+      --accent: #ca8a04;
+      --accent-soft: rgba(202, 138, 4, 0.1);
+      --bg-sidebar: #fafafa;
+      --text-main: #18181b;
+      --text-muted: #3f3f46;
+      --header-bg: linear-gradient(135deg, #09090b 0%, #27272a 100%);
+      --header-text: #fafafa;
+      --border-color: #e4e4e7;
+    }
+
+    [data-theme="slate"] {
+      --primary: #1e293b;
+      --accent: #0d9488;
+      --accent-soft: rgba(13, 148, 136, 0.09);
+      --bg-sidebar: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --header-bg: linear-gradient(135deg, #1e293b 0%, #0f766e 100%);
+      --header-text: #ffffff;
+      --border-color: #cbd5e1;
+    }
+
+    [data-theme="burgundy"] {
+      --primary: #4c0519;
+      --accent: #be123c;
+      --accent-soft: rgba(190, 18, 60, 0.08);
+      --bg-sidebar: #fff1f2;
       --text-main: #1f2937;
       --text-muted: #4b5563;
-      --header-bg: #065f46;
+      --header-bg: linear-gradient(135deg, #4c0519 0%, #881337 100%);
       --header-text: #ffffff;
-      --border-color: #a7f3d0;
+      --border-color: #fecdd3;
     }
 
-    /* Theme 3: Harare Executive */
-    [data-theme="executive"] {
-      --primary: #111827;
-      --accent: #b45309;
-      --bg-sidebar: #f3f4f6;
-      --text-main: #111827;
-      --text-muted: #374151;
-      --header-bg: #111827;
-      --header-text: #f9fafb;
-      --border-color: #d1d5db;
-    }
-
-    /* Theme 4: Clean ATS */
     [data-theme="ats"] {
       --primary: #000000;
-      --accent: #333333;
+      --accent: #000000;
+      --accent-soft: transparent;
       --bg-sidebar: #ffffff;
       --text-main: #000000;
-      --text-muted: #333333;
+      --text-muted: #222222;
       --header-bg: #ffffff;
       --header-text: #000000;
       --border-color: #000000;
     }
 
-    /* ================= APP LAYOUT ================= */
+    /* ================= BASE & STUDIO APP STYLES ================= */
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: var(--font-main);
-      background: #e2e8f0;
-      color: #1a202c;
+      font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #0b1120;
+      color: #e2e8f0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
-    /* Top Navbar */
+    /* Top Studio Navbar */
     .navbar {
-      background: #0f172a;
-      color: #fff;
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 12px 20px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .brand { font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
-    .brand span { color: #10b981; }
-    .user-badge {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #10b981;
+
+    .nav-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #f8fafc;
+    }
+
+    .brand-title span { color: #34d399; }
+
+    .user-pill {
+      font-size: 0.74rem;
+      font-weight: 700;
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      background: rgba(52, 211, 153, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
     }
 
-    .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    select, button {
-      padding: 8px 13px;
-      border-radius: 6px;
-      border: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    button:hover { opacity: 0.92; }
-    select { background: #1e293b; color: #fff; border: 1px solid #334155; }
-    .btn-print { background: #10b981; color: #fff; }
-    .btn-auth { background: #3b82f6; color: #fff; }
-    .btn-logout { background: #475569; color: #fff; }
-    .btn-reset { background: #ef4444; color: #fff; }
-
-    /* ================= AUTH MODAL / SCREEN ================= */
-    .auth-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      z-index: 1000;
-      padding: 16px;
+      gap: 8px;
     }
-    .auth-overlay.active { display: flex; }
 
-    .auth-card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 12px;
-      padding: 28px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      position: relative;
-    }
-    .auth-close {
-      position: absolute;
-      top: 14px;
-      right: 16px;
-      background: transparent;
-      color: #64748b;
-      font-size: 1.3rem;
-      padding: 4px 8px;
-    }
-    .auth-header { text-align: center; margin-bottom: 20px; }
-    .auth-header h2 { font-size: 1.5rem; color: #0f172a; }
-    .auth-header p { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
-
-    .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #f1f5f9;
-      padding: 4px;
+    .theme-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #1e293b;
+      border: 1px solid #334155;
       border-radius: 8px;
-      margin-bottom: 18px;
+      padding: 3px 8px;
     }
-    .auth-tab {
-      background: transparent;
-      color: #475569;
-      padding: 8px;
-      border-radius: 6px;
+
+    .theme-box label {
+      font-size: 0.75rem;
       font-weight: 700;
-    }
-    .auth-tab.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      color: #94a3b8;
+      margin: 0;
     }
 
-    .auth-msg {
+    select {
+      background: transparent;
+      color: #f8fafc;
+      border: none;
       font-size: 0.82rem;
-      padding: 8px 10px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      display: none;
+      font-weight: 600;
+      padding: 5px 4px;
+      cursor: pointer;
+      outline: none;
     }
-    .auth-msg.error { display: block; background: #fee2e2; color: #b91c1c; }
-    .auth-msg.success { display: block; background: #dcfce7; color: #15803d; }
 
-    .btn-submit {
-      width: 100%;
+    select option {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+    .btn-primary:hover { filter: brightness(1.07); }
+
+    .btn-account {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+    .btn-account:hover { filter: brightness(1.07); }
+
+    .btn-ghost {
+      background: rgba(148, 163, 184, 0.12);
+      color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .btn-ghost:hover { background: rgba(148, 163, 184, 0.2); }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.14);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
+
+    /* Mobile Mode Bar */
+    .mobile-switcher {
+      display: none;
+      background: #0f172a;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      gap: 8px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      justify-content: center;
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 9px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+
+    .mode-btn.active {
       background: #10b981;
       color: #ffffff;
-      padding: 11px;
-      font-size: 0.95rem;
-      margin-top: 6px;
-    }
-    .guest-link {
-      display: block;
-      text-align: center;
-      margin-top: 14px;
-      font-size: 0.82rem;
-      color: #64748b;
-      cursor: pointer;
-      text-decoration: underline;
     }
 
-    /* ================= WORKSPACE SPLIT ================= */
+    /* ================= MAIN WORKSPACE ================= */
     .workspace {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 24px;
-      padding: 24px;
-      max-width: 1450px;
+      flex: 1;
+      max-width: 1480px;
+      width: 100%;
       margin: 0 auto;
-      width: 100%;
-    }
-
-    .editor {
-      background: #ffffff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      height: calc(100vh - 95px);
-      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 430px 1fr;
+      gap: 24px;
+      align-items: start;
     }
-    .editor h2 {
-      font-size: 1.02rem;
-      color: #0f172a;
-      margin: 18px 0 10px;
-      padding-bottom: 6px;
-      border-bottom: 2px solid #e2e8f0;
-    }
-    .editor h2:first-child { margin-top: 0; }
-    .form-group { margin-bottom: 12px; }
-    label { display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px; }
-    input, textarea {
-      width: 100%;
-      padding: 9px 11px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-family: inherit;
-    }
-    input:focus, textarea:focus { outline: none; border-color: #10b981; }
-    textarea { resize: vertical; min-height: 75px; }
-    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    /* ================= A4 CV PREVIEW SHEET ================= */
-    .preview-container {
+    /* Editor Panel */
+    .editor {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 14px;
+      padding: 18px;
+      max-height: calc(100vh - 104px);
+      overflow-y: auto;
+      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .editor::-webkit-scrollbar { width: 6px; }
+    .editor::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+
+    .section-card {
+      background: #1e293b;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-card:last-child { margin-bottom: 0; }
+
+    .section-card-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #34d399;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-group { margin-bottom: 11px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 76px;
+      line-height: 1.45;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ================= PREVIEW STAGE & A4 SHEET ================= */
+    .preview-stage {
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 14px;
+      padding: 24px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      overflow-x: auto;
+      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
     }
+
     .cv-sheet {
+      font-family: var(--font-cv);
       background: #ffffff;
       width: 210mm;
       min-height: 297mm;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       color: var(--text-main);
+      border-radius: 4px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .cv-header {
@@ -257,33 +382,52 @@
       padding: 32px 36px;
       border-bottom: 4px solid var(--accent);
     }
+
     [data-theme="ats"] .cv-header {
       padding: 24px 36px 16px;
       border-bottom: 2px solid #000;
     }
-    .cv-name { font-size: 2rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
-    .cv-title { font-size: 1.1rem; opacity: 0.9; margin-top: 4px; font-weight: 500; }
+
+    .cv-name {
+      font-size: 1.95rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .cv-title {
+      font-size: 1.02rem;
+      font-weight: 500;
+      opacity: 0.92;
+      margin-top: 6px;
+    }
+
     .cv-contact {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 16px;
       margin-top: 14px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       opacity: 0.95;
     }
 
     .cv-body {
       display: grid;
-      grid-template-columns: 230px 1fr;
+      grid-template-columns: 235px 1fr;
       flex: 1;
     }
-    [data-theme="ats"] .cv-body { grid-template-columns: 1fr; }
+
+    [data-theme="ats"] .cv-body {
+      grid-template-columns: 1fr;
+    }
 
     .cv-sidebar {
       background: var(--bg-sidebar);
-      padding: 24px;
+      padding: 24px 20px;
       border-right: 1px solid var(--border-color);
     }
+
     [data-theme="ats"] .cv-sidebar {
       border-right: none;
       border-bottom: 1px solid #000;
@@ -293,64 +437,289 @@
       gap: 16px;
     }
 
-    .cv-main { padding: 28px 34px; }
-    [data-theme="ats"] .cv-main { padding: 20px 36px; }
+    .cv-main {
+      padding: 28px 34px;
+    }
 
-    .section-title {
-      font-size: 0.95rem;
+    [data-theme="ats"] .cv-main {
+      padding: 20px 36px;
+    }
+
+    .cv-block {
+      margin-bottom: 20px;
+    }
+
+    .cv-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .cv-section-title {
+      font-size: 0.86rem;
       font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--primary);
       border-bottom: 2px solid var(--accent);
-      padding-bottom: 4px;
-      margin-bottom: 12px;
-      letter-spacing: 0.8px;
+      padding-bottom: 5px;
+      margin-bottom: 11px;
     }
-    .cv-block { margin-bottom: 20px; }
-    .cv-text { font-size: 0.88rem; line-height: 1.55; white-space: pre-line; }
-    .meta-list { list-style: none; font-size: 0.84rem; line-height: 1.65; }
-    .meta-list li strong { color: var(--primary); }
+
+    .cv-text {
+      font-size: 0.87rem;
+      line-height: 1.58;
+      color: var(--text-main);
+      white-space: pre-line;
+    }
+
+    .meta-list {
+      list-style: none;
+      font-size: 0.83rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    .meta-list li strong {
+      color: var(--primary);
+    }
+
     .skill-tag {
       display: inline-block;
-      background: #fff;
+      background: var(--accent-soft);
       border: 1px solid var(--border-color);
       color: var(--primary);
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.76rem;
+      font-weight: 700;
       margin: 0 5px 6px 0;
     }
 
-    @media (max-width: 1024px) {
-      .workspace { grid-template-columns: 1fr; }
-      .editor { height: auto; }
-      .cv-sheet { width: 100%; min-height: auto; }
+    /* ================= AUTH MODAL ================= */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.82);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
     }
 
-    @media print {
-      body { background: #fff; }
-      .navbar, .editor, .auth-overlay { display: none !important; }
-      .workspace { display: block; padding: 0; margin: 0; }
+    .auth-overlay.active {
+      display: flex;
+    }
+
+    .auth-card {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      padding: 26px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
+      position: relative;
+    }
+
+    .auth-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .auth-close:hover {
+      color: #fff;
+      background: rgba(148, 163, 184, 0.22);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .auth-header h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+
+    .auth-header p {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #1e293b;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      gap: 4px;
+    }
+
+    .auth-tab {
+      background: transparent;
+      color: #94a3b8;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .auth-tab.active {
+      background: #0f172a;
+      color: #34d399;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .auth-msg {
+      display: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 9px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .auth-msg.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .auth-submit {
+      width: 100%;
+      justify-content: center;
+      padding: 11px;
+      font-size: 0.88rem;
+      margin-top: 6px;
+    }
+
+    .guest-btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    .guest-btn:hover {
+      color: #f8fafc;
+    }
+
+    /* ================= RESPONSIVE MOBILE & TABLET ================= */
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        padding: 14px;
+        gap: 14px;
+      }
+
+      .editor {
+        max-height: none;
+        padding: 14px;
+      }
+
+      .preview-stage {
+        padding: 12px;
+      }
+
       .cv-sheet {
+        width: 100%;
+        min-height: auto;
+      }
+
+      .cv-body {
+        grid-template-columns: 1fr;
+      }
+
+      .cv-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-switcher {
+        display: flex;
+      }
+
+      .workspace.mobile-show-preview .editor {
+        display: none;
+      }
+
+      .workspace:not(.mobile-show-preview) .preview-stage {
+        display: none;
+      }
+
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ================= PRINT / PDF EXPORT ================= */
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .navbar,
+      .mobile-switcher,
+      .editor,
+      .auth-overlay {
+        display: none !important;
+      }
+
+      .workspace,
+      .preview-stage {
+        display: block !important;
+        padding: 0;
+        margin: 0;
+        background: #ffffff;
+        border: none;
         box-shadow: none;
+      }
+
+      .cv-sheet {
         width: 100%;
         min-height: 100vh;
+        box-shadow: none;
+        border-radius: 0;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+
+      .cv-body {
+        grid-template-columns: 235px 1fr !important;
+      }
+
+      .cv-sidebar {
+        border-right: 1px solid var(--border-color) !important;
+        border-bottom: none !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- AUTHENTICATION MODAL (SIGN UP / LOG IN) -->
+  <!-- AUTH MODAL -->
   <div class="auth-overlay" id="authModal">
     <div class="auth-card">
-      <button class="auth-close" onclick="closeAuthModal()" title="Close">&times;</button>
+      <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">&times;</button>
       <div class="auth-header">
-        <h2>CVPro-<span style="color:#10b981;">Zim</span> Account</h2>
-        <p>Save your CVs and themes securely on this device</p>
+        <h2>CVPro-<span>Zim</span> Studio</h2>
+        <p>Sign in to save your CV profile and theme preferences</p>
       </div>
 
       <div class="auth-tabs">
@@ -360,97 +729,475 @@
 
       <div id="authMsg" class="auth-msg"></div>
 
-      <!-- LOGIN FORM -->
       <form id="loginForm" onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" id="loginEmail" placeholder="tendai@example.co.zw" required />
+          <input type="email" id="loginEmail" placeholder="you@example.co.zw" required />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+          <input type="password" id="loginPassword" placeholder="Enter password" required />
         </div>
-        <button type="submit" class="btn-submit">Log In to Account</button>
+        <button type="submit" class="btn-primary auth-submit">Log In</button>
       </form>
 
-      <!-- SIGN UP FORM -->
       <form id="signupForm" style="display:none;" onsubmit="handleSignup(event)">
         <div class="form-group">
           <label>Full Name</label>
-          <input type="text" id="signupName" placeholder="Tendai Moyo" required />
+          <input type="text" id="signupName" placeholder="Your full name" required />
         </div>
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" id="signupEmail" placeholder="tendai@example.co.zw" required />
+          <input type="email" id="signupEmail" placeholder="you@example.co.zw" required />
         </div>
         <div class="form-group">
-          <label>Create Password (min. 6 characters)</label>
-          <input type="password" id="signupPassword" minlength="6" placeholder="Create a strong password" required />
+          <label>Password (min. 6 characters)</label>
+          <input type="password" id="signupPassword" minlength="6" placeholder="Create password" required />
         </div>
         <div class="form-group">
           <label>Confirm Password</label>
-          <input type="password" id="signupConfirm" minlength="6" placeholder="Repeat password" required />
+          <input type="password" id="signupConfirm" minlength="6" placeholder="Confirm password" required />
         </div>
-        <button type="submit" class="btn-submit">Create Free Account</button>
+        <button type="submit" class="btn-primary auth-submit">Create Account</button>
       </form>
 
-      <span class="guest-link" onclick="closeAuthModal()">Continue as Guest without an account</span>
+      <button type="button" class="guest-btn" onclick="closeAuthModal()">Continue as Guest</button>
     </div>
   </div>
 
-  <!-- TOP BAR -->
-  <nav class="navbar">
-    <div class="brand">
-      <div>CVPro-<span>Zim</span></div>
-      <span class="user-badge" id="userBadge">Guest Mode</span>
-    </div>
-    <div class="controls">
-      <label for="themeSelector" style="color:#cbd5e1; margin:0;">Theme:</label>
-      <select id="themeSelector" onchange="changeTheme(this.value)">
-        <option value="corporate">Corporate Navy</option>
-        <option value="emerald">Zim Emerald & Gold</option>
-        <option value="executive">Harare Executive</option>
-        <option value="ats">Clean ATS (Plain Print)</option>
-      </select>
-      <button class="btn-print" onclick="window.print()">Download PDF</button>
-      <button class="btn-reset" onclick="resetForm()">Clear</button>
-      <button class="btn-auth" id="btnOpenAuth" onclick="openAuthModal('login')">Log In / Sign Up</button>
-      <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logoutUser()">Log Out</button>
-    </div>
-  </nav>
+  <!-- TOP NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand-group">
+        <div class="brand-logo">CV</div>
+        <div class="brand-title">CVPro-<span>Zim</span></div>
+        <span class="user-pill" id="userBadge">Guest Mode</span>
+      </div>
 
-  <!-- MAIN WORKSPACE -->
-  <div class="workspace">
-    <!-- LEFT: INPUT FORM -->
+      <div class="nav-actions">
+        <div class="theme-box">
+          <label for="themeSelector">Theme</label>
+          <select id="themeSelector" onchange="changeTheme(this.value)">
+            <option value="corporate">Corporate Navy</option>
+            <option value="emerald">Zim Emerald & Gold</option>
+            <option value="executive">Harare Executive</option>
+            <option value="slate">Modern Slate & Teal</option>
+            <option value="burgundy">Burgundy Prestige</option>
+            <option value="ats">Clean ATS Print</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="window.print()">Export PDF</button>
+        <button type="button" class="btn-danger" onclick="resetForm()">Clear</button>
+        <button type="button" class="btn-account" id="btnOpenAuth" onclick="openAuthModal('login')">Log In / Sign Up</button>
+        <button type="button" class="btn-ghost" id="btnLogout" style="display:none;" onclick="logoutUser()">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE EDITOR / PREVIEW SWITCHER -->
+  <div class="mobile-switcher">
+    <button type="button" class="mode-btn active" id="btnModeEdit" onclick="setMobileMode('edit')">Edit Details</button>
+    <button type="button" class="mode-btn" id="btnModePreview" onclick="setMobileMode('preview')">Live CV Preview</button>
+  </div>
+
+  <!-- WORKSPACE -->
+  <main class="workspace" id="workspace">
+    <!-- EDITOR -->
     <aside class="editor">
-      <h2>1. Personal Details</h2>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="inName" oninput="updateCV()" />
-      </div>
-      <div class="form-group">
-        <label>Target Job Title</label>
-        <input type="text" id="inTitle" oninput="updateCV()" />
-      </div>
-      <div class="row-2">
+      <div class="section-card">
+        <div class="section-card-title">1. Personal Details</div>
         <div class="form-group">
-          <label>Phone (WhatsApp / Call)</label>
-          <input type="text" id="inPhone" oninput="updateCV()" />
+          <label>Full Name</label>
+          <input type="text" id="inName" oninput="updateCV()" />
         </div>
         <div class="form-group">
-          <label>Email Address</label>
-          <input type="text" id="inEmail" oninput="updateCV()" />
+          <label>Target Job Title</label>
+          <input type="text" id="inTitle" oninput="updateCV()" />
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label>Phone (WhatsApp / Call)</label>
+            <input type="text" id="inPhone" oninput="updateCV()" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" id="inEmail" oninput="updateCV()" />
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label>City / Location</label>
+            <input type="text" id="inLocation" oninput="updateCV()" />
+          </div>
+          <div class="form-group">
+            <label>Driver's License Class</label>
+            <input type="text" id="inLicense" oninput="updateCV()" />
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label>National ID / Passport</label>
+            <input type="text" id="inId" oninput="updateCV()" />
+          </div>
+          <div class="form-group">
+            <label>Languages</label>
+            <input type="text" id="inLang" oninput="updateCV()" />
+          </div>
         </div>
       </div>
-      <div class="row-2">
+
+      <div class="section-card">
+        <div class="section-card-title">2. Professional Summary</div>
         <div class="form-group">
-          <label>City / Location</label>
-          <input type="text" id="inLocation" oninput="updateCV()" />
-        </div>
-        <div class="form-group">
-          <label>Driver's License Class</label>
-          <input type="text" id="inLicense" oninput="updateCV()" />
+          <textarea id="inSummary" oninput="updateCV()"></textarea>
         </div>
       </div>
-      <div class="row-2">
-        <div class="
+
+      <div class="section-card">
+        <div class="section-card-title">3. Work Experience</div>
+        <div class="form-group">
+          <textarea id="inExp" style="min-height: 120px;" oninput="updateCV()"></textarea>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">4. Education & Qualifications</div>
+        <div class="form-group">
+          <textarea id="inEdu" oninput="updateCV()"></textarea>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">5. Core Skills (Comma Separated)</div>
+        <div class="form-group">
+          <input type="text" id="inSkills" oninput="updateCV()" />
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">6. References</div>
+        <div class="form-group">
+          <textarea id="inRefs" oninput="updateCV()"></textarea>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PREVIEW -->
+    <section class="preview-stage">
+      <article class="cv-sheet" id="cvSheet" data-theme="corporate">
+        <header class="cv-header">
+          <div class="cv-name" id="outName"></div>
+          <div class="cv-title" id="outTitle"></div>
+          <div class="cv-contact">
+            <span id="outPhone"></span>
+            <span id="outEmail"></span>
+            <span id="outLocation"></span>
+          </div>
+        </header>
+
+        <div class="cv-body">
+          <aside class="cv-sidebar">
+            <div class="cv-block">
+              <div class="cv-section-title">Key Details</div>
+              <ul class="meta-list">
+                <li><strong>License:</strong> <span id="outLicense"></span></li>
+                <li><strong>ID Status:</strong> <span id="outId"></span></li>
+                <li><strong>Languages:</strong> <span id="outLang"></span></li>
+              </ul>
+            </div>
+
+            <div class="cv-block">
+              <div class="cv-section-title">Core Skills</div>
+              <div id="outSkills"></div>
+            </div>
+          </aside>
+
+          <div class="cv-main">
+            <div class="cv-block">
+              <div class="cv-section-title">Professional Summary</div>
+              <div class="cv-text" id="outSummary"></div>
+            </div>
+
+            <div class="cv-block">
+              <div class="cv-section-title">Work Experience</div>
+              <div class="cv-text" id="outExp"></div>
+            </div>
+
+            <div class="cv-block">
+              <div class="cv-section-title">Education & Certifications</div>
+              <div class="cv-text" id="outEdu"></div>
+            </div>
+
+            <div class="cv-block">
+              <div class="cv-section-title">References</div>
+              <div class="cv-text" id="outRefs"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const fields = ['Name', 'Title', 'Phone', 'Email', 'Location', 'License', 'Id', 'Lang', 'Summary', 'Exp', 'Edu', 'Refs'];
+
+    const defaultSample = {
+      Name: "Tendai Moyo",
+      Title: "Logistics & Commercial Driver | Operations Coordinator",
+      Phone: "+263 71 234 5678",
+      Email: "tendai.moyo@email.co.zw",
+      Location: "Harare, Zimbabwe",
+      License: "Class 4 (Clean Record)",
+      Id: "Available on Request",
+      Lang: "English, Shona, Ndebele",
+      Summary: "Safety-driven and reliable professional with strong route knowledge across Harare and major Zimbabwean corridors. Proven track record in punctual deliveries, pre-trip inspections, and customer service.",
+      Exp: "Fleet & Delivery Driver — SwiftLink Logistics, Harare (2024 – Present)\n• Completed 25+ daily commercial deliveries on schedule with high customer satisfaction.\n• Executed daily pre-trip vehicle checks, fuel logging, and routine care.\n• Maintained accurate waybills, delivery notes, and cash reconciliations.",
+      Edu: "• Defensive Driving Certificate — Traffic Safety Council of Zimbabwe (TSCZ)\n• ZIMSEC Ordinary Level — Passes including English & Mathematics",
+      Skills: "Defensive Driving, Route Planning, Customer Care, Vehicle Inspection, Dispatch Support, Punctuality",
+      Refs: "Mr. T. Chikwanda — Operations Manager, SwiftLink Logistics | +263 77 987 6543\nAdditional contactable references available upon request."
+    };
+
+    let currentUser = null;
+
+    function setMobileMode(mode) {
+      const ws = document.getElementById('workspace');
+      const btnEdit = document.getElementById('btnModeEdit');
+      const btnPreview = document.getElementById('btnModePreview');
+      if (mode === 'preview') {
+        ws.classList.add('mobile-show-preview');
+        btnPreview.classList.add('active');
+        btnEdit.classList.remove('active');
+      } else {
+        ws.classList.remove('mobile-show-preview');
+        btnEdit.classList.add('active');
+        btnPreview.classList.remove('active');
+      }
+    }
+
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password + "_cvpro_zim_v2_salt");
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function getUsersDB() {
+      return JSON.parse(localStorage.getItem('cvpro_zim_users') || '{}');
+    }
+
+    function saveUsersDB(db) {
+      localStorage.setItem('cvpro_zim_users', JSON.stringify(db));
+    }
+
+    function openAuthModal(tab = 'login') {
+      document.getElementById('authModal').classList.add('active');
+      switchAuthTab(tab);
+      clearAuthMsg();
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.remove('active');
+    }
+
+    function switchAuthTab(tab) {
+      clearAuthMsg();
+      const isLogin = tab === 'login';
+      document.getElementById('tabLogin').classList.toggle('active', isLogin);
+      document.getElementById('tabSignup').classList.toggle('active', !isLogin);
+      document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+      document.getElementById('signupForm').style.display = isLogin ? 'none' : 'block';
+    }
+
+    function showAuthMsg(text) {
+      const box = document.getElementById('authMsg');
+      box.textContent = text;
+      box.className = 'auth-msg error';
+    }
+
+    function clearAuthMsg() {
+      const box = document.getElementById('authMsg');
+      box.style.display = 'none';
+      box.className = 'auth-msg';
+    }
+
+    async function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+      const pass = document.getElementById('signupPassword').value;
+      const confirm = document.getElementById('signupConfirm').value;
+
+      if (pass !== confirm) {
+        return showAuthMsg("Passwords do not match.");
+      }
+
+      const users = getUsersDB();
+      if (users[email]) {
+        return showAuthMsg("An account with this email already exists.");
+      }
+
+      const hashed = await hashPassword(pass);
+      users[email] = {
+        name,
+        email,
+        passwordHash: hashed,
+        cvData: { ...defaultSample, Name: name, Email: email },
+        theme: 'corporate'
+      };
+      saveUsersDB(users);
+
+      sessionStorage.setItem('cvpro_zim_session', email);
+      currentUser = email;
+      updateAuthUI();
+      loadUserData();
+      closeAuthModal();
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPassword').value;
+
+      const users = getUsersDB();
+      const user = users[email];
+      if (!user) {
+        return showAuthMsg("Account not found. Please sign up.");
+      }
+
+      const hashed = await hashPassword(pass);
+      if (hashed !== user.passwordHash) {
+        return showAuthMsg("Incorrect password.");
+      }
+
+      sessionStorage.setItem('cvpro_zim_session', email);
+      currentUser = email;
+      updateAuthUI();
+      loadUserData();
+      closeAuthModal();
+    }
+
+    function logoutUser() {
+      sessionStorage.removeItem('cvpro_zim_session');
+      currentUser = null;
+      updateAuthUI();
+      loadUserData();
+    }
+
+    function updateAuthUI() {
+      const badge = document.getElementById('userBadge');
+      const btnAuth = document.getElementById('btnOpenAuth');
+      const btnLogout = document.getElementById('btnLogout');
+
+      if (currentUser) {
+        const users = getUsersDB();
+        badge.textContent = users[currentUser]?.name || currentUser;
+        btnAuth.style.display = 'none';
+        btnLogout.style.display = 'inline-flex';
+      } else {
+        badge.textContent = "Guest Mode";
+        btnAuth.style.display = 'inline-flex';
+        btnLogout.style.display = 'none';
+      }
+    }
+
+    function updateCV() {
+      fields.forEach(field => {
+        const val = document.getElementById('in' + field).value;
+        const out = document.getElementById('out' + field);
+        if (field === 'Phone') out.textContent = val ? 'Tel: ' + val : '';
+        else if (field === 'Email') out.textContent = val ? 'Email: ' + val : '';
+        else if (field === 'Location') out.textContent = val ? 'Location: ' + val : '';
+        else out.textContent = val;
+      });
+
+      const skillsRaw = document.getElementById('inSkills').value;
+      const skillsContainer = document.getElementById('outSkills');
+      skillsContainer.innerHTML = '';
+      skillsRaw.split(',').forEach(skill => {
+        const trimmed = skill.trim();
+        if (trimmed) {
+          const span = document.createElement('span');
+          span.className = 'skill-tag';
+          span.textContent = trimmed;
+          skillsContainer.appendChild(span);
+        }
+      });
+
+      saveUserData();
+    }
+
+    function changeTheme(themeName) {
+      document.getElementById('cvSheet').setAttribute('data-theme', themeName);
+      if (currentUser) {
+        const users = getUsersDB();
+        if (users[currentUser]) {
+          users[currentUser].theme = themeName;
+          saveUsersDB(users);
+        }
+      } else {
+        localStorage.setItem('cvpro_zim_guest_theme', themeName);
+      }
+    }
+
+    function saveUserData() {
+      const data = {};
+      fields.forEach(f => data[f] = document.getElementById('in' + f).value);
+      data.Skills = document.getElementById('inSkills').value;
+
+      if (currentUser) {
+        const users = getUsersDB();
+        if (users[currentUser]) {
+          users[currentUser].cvData = data;
+          saveUsersDB(users);
+        }
+      } else {
+        localStorage.setItem('cvpro_zim_guest_data', JSON.stringify(data));
+      }
+    }
+
+    function loadUserData() {
+      let data = defaultSample;
+      let theme = 'corporate';
+
+      if (currentUser) {
+        const users = getUsersDB();
+        if (users[currentUser]) {
+          data = users[currentUser].cvData || defaultSample;
+          theme = users[currentUser].theme || 'corporate';
+        }
+      } else {
+        const guestSaved = localStorage.getItem('cvpro_zim_guest_data');
+        if (guestSaved) data = JSON.parse(guestSaved);
+        theme = localStorage.getItem('cvpro_zim_guest_theme') || 'corporate';
+      }
+
+      fields.forEach(f => {
+        document.getElementById('in' + f).value = data[f] !== undefined ? data[f] : '';
+      });
+      document.getElementById('inSkills').value = data.Skills !== undefined ? data.Skills : '';
+
+      document.getElementById('themeSelector').value = theme;
+      document.getElementById('cvSheet').setAttribute('data-theme', theme);
+      updateCV();
+    }
+
+    function resetForm() {
+      if (confirm('Clear all CV fields?')) {
+        fields.forEach(f => document.getElementById('in' + f).value = '');
+        document.getElementById('inSkills').value = '';
+        updateCV();
+      }
+    }
+
+    window.onload = function () {
+      const activeSession = sessionStorage.getItem('cvpro_zim_session');
+      if (activeSession && getUsersDB()[activeSession]) {
+        currentUser = activeSession;
+      }
+      updateAuthUI();
+      loadUserData();
+    };
+  </script>
+</body>
+</html>
