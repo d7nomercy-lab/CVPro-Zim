@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CVPro-Zim | Free Zimbabwe CV & Resume Builder</title>
+  <style>
+    /* ================= THEME VARIABLES ================= */
+    :root {
+      --primary: #1a365d;
+      --accent: #2b6cb0;
+      --bg-sidebar: #f7fafc;
+      --text-main: #1a202c;
+      --text-muted: #4a5568;
+      --header-bg: #1a365d;
+      --header-text: #ffffff;
+      --border-color: #cbd5e0;
+      --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Theme 2: Zim Emerald */
+    [data-theme="emerald"] {
+      --primary: #065f46;
+      --accent: #d97706;
+      --bg-sidebar: #ecfdf5;
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --header-bg: #065f46;
+      --header-text: #ffffff;
+      --border-color: #a7f3d0;
+    }
+
+    /* Theme 3: Harare Executive */
+    [data-theme="executive"] {
+      --primary: #111827;
+      --accent: #b45309;
+      --bg-sidebar: #f3f4f6;
+      --text-main: #111827;
+      --text-muted: #374151;
+      --header-bg: #111827;
+      --header-text: #f9fafb;
+      --border-color: #d1d5db;
+    }
+
+    /* Theme 4: Clean ATS */
+    [data-theme="ats"] {
+      --primary: #000000;
+      --accent: #333333;
+      --bg-sidebar: #ffffff;
+      --text-main: #000000;
+      --text-muted: #333333;
+      --header-bg: #ffffff;
+      --header-text: #000000;
+      --border-color: #000000;
+    }
+
+    /* ================= APP LAYOUT ================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background: #e2e8f0;
+      color: #1a202c;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Navbar */
+    .navbar {
+      background: #0f172a;
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .brand { font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+    .brand span { color: #10b981; }
+    .user-badge {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #10b981;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    select, button {
+      padding: 8px 13px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.92; }
+    select { background: #1e293b; color: #fff; border: 1px solid #334155; }
+    .btn-print { background: #10b981; color: #fff; }
+    .btn-auth { background: #3b82f6; color: #fff; }
+    .btn-logout { background: #475569; color: #fff; }
+    .btn-reset { background: #ef4444; color: #fff; }
+
+    /* ================= AUTH MODAL / SCREEN ================= */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+    .auth-overlay.active { display: flex; }
+
+    .auth-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .auth-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: transparent;
+      color: #64748b;
+      font-size: 1.3rem;
+      padding: 4px 8px;
+    }
+    .auth-header { text-align: center; margin-bottom: 20px; }
+    .auth-header h2 { font-size: 1.5rem; color: #0f172a; }
+    .auth-header p { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+    .auth-tab {
+      background: transparent;
+      color: #475569;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .auth-tab.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .auth-msg {
+      font-size: 0.82rem;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .auth-msg.error { display: block; background: #fee2e2; color: #b91c1c; }
+    .auth-msg.success { display: block; background: #dcfce7; color: #15803d; }
+
+    .btn-submit {
+      width: 100%;
+      background: #10b981;
+      color: #ffffff;
+      padding: 11px;
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+    .guest-link {
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: #64748b;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* ================= WORKSPACE SPLIT ================= */
+    .workspace {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1450px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .editor {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      height: calc(100vh - 95px);
+      overflow-y: auto;
+    }
+    .editor h2 {
+      font-size: 1.02rem;
+      color: #0f172a;
+      margin: 18px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .editor h2:first-child { margin-top: 0; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px; }
+    input, textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus { outline: none; border-color: #10b981; }
+    textarea { resize: vertical; min-height: 75px; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* ================= A4 CV PREVIEW SHEET ================= */
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .cv-sheet {
+      background: #ffffff;
+      width: 210mm;
+      min-height: 297mm;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cv-header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 32px 36px;
+      border-bottom: 4px solid var(--accent);
+    }
+    [data-theme="ats"] .cv-header {
+      padding: 24px 36px 16px;
+      border-bottom: 2px solid #000;
+    }
+    .cv-name { font-size: 2rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+    .cv-title { font-size: 1.1rem; opacity: 0.9; margin-top: 4px; font-weight: 500; }
+    .cv-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+      font-size: 0.85rem;
+      opacity: 0.95;
+    }
+
+    .cv-body {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      flex: 1;
+    }
+    [data-theme="ats"] .cv-body { grid-template-columns: 1fr; }
+
+    .cv-sidebar {
+      background: var(--bg-sidebar);
+      padding: 24px;
+      border-right: 1px solid var(--border-color);
+    }
+    [data-theme="ats"] .cv-sidebar {
+      border-right: none;
+      border-bottom: 1px solid #000;
+      padding: 16px 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .cv-main { padding: 28px 34px; }
+    [data-theme="ats"] .cv-main { padding: 20px 36px; }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--primary);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      letter-spacing: 0.8px;
+    }
+    .cv-block { margin-bottom: 20px; }
+    .cv-text { font-size: 0.88rem; line-height: 1.55; white-space: pre-line; }
+    .meta-list { list-style: none; font-size: 0.84rem; line-height: 1.65; }
+    .meta-list li strong { color: var(--primary); }
+    .skill-tag {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      color: var(--primary);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin: 0 5px 6px 0;
+    }
+
+    @media (max-width: 1024px) {
+      .workspace { grid-template-columns: 1fr; }
+      .editor { height: auto; }
+      .cv-sheet { width: 100%; min-height: auto; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .navbar, .editor, .auth-overlay { display: none !important; }
+      .workspace { display: block; padding: 0; margin: 0; }
+      .cv-sheet {
+        box-shadow: none;
+        width: 100%;
+        min-height: 100vh;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTHENTICATION MODAL (SIGN UP / LOG IN) -->
+  <div class="auth-overlay" id="authModal">
+    <div class="auth-card">
+      <button class="auth-close" onclick="closeAuthModal()" title="Close">&times;</button>
+      <div class="auth-header">
+        <h2>CVPro-<span style="color:#10b981;">Zim</span> Account</h2>
+        <p>Save your CVs and themes securely on this device</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Log In</button>
+        <button type="button" class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
+      </div>
+
+      <div id="authMsg" class="auth-msg"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="tendai@example.co.zw" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn-submit">Log In to Account</button>
+      </form>
+
+      <!-- SIGN UP FORM -->
+      <form id="signupForm" style="display:none;" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" placeholder="Tendai Moyo" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signupEmail" placeholder="tendai@example.co.zw" required />
+        </div>
+        <div class="form-group">
+          <label>Create Password (min. 6 characters)</label>
+          <input type="password" id="signupPassword" minlength="6" placeholder="Create a strong password" required />
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="signupConfirm" minlength="6" placeholder="Repeat password" required />
+        </div>
+        <button type="submit" class="btn-submit">Create Free Account</button>
+      </form>
+
+      <span class="guest-link" onclick="closeAuthModal()">Continue as Guest without an account</span>
+    </div>
+  </div>
+
+  <!-- TOP BAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div>CVPro-<span>Zim</span></div>
+      <span class="user-badge" id="userBadge">Guest Mode</span>
+    </div>
+    <div class="controls">
+      <label for="themeSelector" style="color:#cbd5e1; margin:0;">Theme:</label>
+      <select id="themeSelector" onchange="changeTheme(this.value)">
+        <option value="corporate">Corporate Navy</option>
+        <option value="emerald">Zim Emerald & Gold</option>
+        <option value="executive">Harare Executive</option>
+        <option value="ats">Clean ATS (Plain Print)</option>
+      </select>
+      <button class="btn-print" onclick="window.print()">Download PDF</button>
+      <button class="btn-reset" onclick="resetForm()">Clear</button>
+      <button class="btn-auth" id="btnOpenAuth" onclick="openAuthModal('login')">Log In / Sign Up</button>
+      <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logoutUser()">Log Out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="workspace">
+    <!-- LEFT: INPUT FORM -->
+    <aside class="editor">
+      <h2>1. Personal Details</h2>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="inName" oninput="updateCV()" />
+      </div>
+      <div class="form-group">
+        <label>Target Job Title</label>
+        <input type="text" id="inTitle" oninput="updateCV()" />
+      </div>
+      <div class="row-2">
+        <div class="form-group">
+          <label>Phone (WhatsApp / Call)</label>
+          <input type="text" id="inPhone" oninput="updateCV()" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" id="inEmail" oninput="updateCV()" />
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="form-group">
+          <label>City / Location</label>
+          <input type="text" id="inLocation" oninput="updateCV()" />
+        </div>
+        <div class="form-group">
+          <label>Driver's License Class</label>
+          <input type="text" id="inLicense" oninput="updateCV()" />
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="
